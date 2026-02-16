@@ -1,4 +1,5 @@
-import { apiPost } from '@/lib/api'
+import { apiGet, apiPost } from '@/lib/api'
+import type { AuthSessionResponse } from '@/types/login-signup'
 
 export interface RequestPasswordResetPayload {
   email: string
@@ -28,4 +29,45 @@ export async function requestPasswordReset(
  */
 export async function resetPassword(payload: ResetPasswordPayload): Promise<AuthMessageResponse> {
   return apiPost<AuthMessageResponse>('/auth/reset-password', payload)
+}
+
+/**
+ * Sign up with email and password. Optional workspace name for first signup.
+ */
+export async function signUp(payload: {
+  email: string
+  password: string
+  workspace?: string
+}): Promise<AuthMessageResponse> {
+  return apiPost<AuthMessageResponse>('/auth/signup', payload)
+}
+
+/**
+ * Sign in with email and password.
+ */
+export async function signIn(payload: {
+  email: string
+  password: string
+}): Promise<AuthMessageResponse> {
+  return apiPost<AuthMessageResponse>('/auth/login', payload)
+}
+
+/**
+ * Resend verification email for the given email address.
+ */
+export async function resendVerificationEmail(payload: {
+  email: string
+}): Promise<AuthMessageResponse> {
+  return apiPost<AuthMessageResponse>('/auth/resend-verification', payload)
+}
+
+/**
+ * Get current session; used to check if user is authenticated and email verified.
+ */
+export async function getSession(): Promise<AuthSessionResponse | null> {
+  try {
+    return await apiGet<AuthSessionResponse>('/auth/session')
+  } catch {
+    return null
+  }
 }

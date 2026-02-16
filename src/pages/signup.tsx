@@ -107,6 +107,8 @@ export function SignupPage() {
             <p className="text-center text-sm text-muted-foreground">
               Already have an account?{' '}
               <Link to="/login" className="font-medium text-primary hover:underline">Sign in</Link>
+              {' · '}
+              <Link to="/login-/-signup" className="font-medium text-primary hover:underline">Unified login & signup</Link>
             </p>
           </CardContent>
         </Card>
