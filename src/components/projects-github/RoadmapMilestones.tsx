@@ -50,10 +50,10 @@ export function RoadmapMilestones({ repoId, className }: RoadmapMilestonesProps)
 
   return (
     <>
-      <Card className={cn('transition-all duration-200 hover:shadow-card-hover', className)}>
+      <Card className={cn('transition-all duration-300 hover:shadow-card-hover border-primary/10', className)}>
         <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20 text-primary">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary/30 to-amber-600/20 text-primary">
               <Flag className="h-5 w-5" aria-hidden />
             </span>
             <div>
@@ -75,7 +75,7 @@ export function RoadmapMilestones({ repoId, className }: RoadmapMilestonesProps)
           ) : isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <Skeleton key={i} className="h-20 w-full" />
+                <Skeleton key={i} className="h-20 w-full animate-shimmer" />
               ))}
             </div>
           ) : milestones.length === 0 ? (
@@ -89,12 +89,12 @@ export function RoadmapMilestones({ repoId, className }: RoadmapMilestonesProps)
           ) : (
             <div className="space-y-4">
               <div className="relative">
-                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border rounded-full" aria-hidden />
+                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/60 to-amber-600/30 rounded-full" aria-hidden />
                 <ul className="space-y-4">
-                  {milestones.map((m) => (
-                    <li key={m.id} className="relative flex gap-4 pl-10">
-                      <span className="absolute left-0 flex h-4 w-4 items-center justify-center rounded-full border-2 border-primary bg-card-surface" aria-hidden />
-                      <div className="flex-1 rounded-lg border border-border bg-panel p-4 transition-all duration-200 hover:shadow-card-hover hover:border-[rgb(63,63,70)]">
+                  {milestones.map((m, i) => (
+                    <li key={m.id} className="relative flex gap-4 pl-10 animate-fade-in-up" style={{ animationDelay: `${i * 60}ms`, animationFillMode: 'backwards' }}>
+                      <span className="absolute left-0 flex h-4 w-4 items-center justify-center rounded-full border-2 border-primary bg-card-surface shadow-sm" aria-hidden />
+                      <div className="flex-1 rounded-lg border border-border bg-panel p-4 transition-all duration-300 hover:shadow-card-hover hover:border-primary/30">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <h4 className="font-semibold text-white">{m.title}</h4>
                           <span

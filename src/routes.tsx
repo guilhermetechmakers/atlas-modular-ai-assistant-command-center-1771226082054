@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { DashboardLayout } from '@/components/layout/dashboard-layout'
 import { LandingPage } from '@/pages/landing'
 import { LoginPage } from '@/pages/login'
@@ -10,6 +10,7 @@ import { DashboardOverview } from '@/pages/dashboard/overview'
 import { ProjectsPage } from '@/pages/dashboard/projects'
 import { ProjectsGitHubPage } from '@/pages/dashboard/projects-github'
 import { ContentPage } from '@/pages/dashboard/content'
+import { ContentPipelinePage } from '@/pages/ContentPipeline'
 import { ResearchPage } from '@/pages/dashboard/research'
 import { CalendarPage } from '@/pages/dashboard/calendar'
 import { FinancePage } from '@/pages/dashboard/finance'
@@ -33,7 +34,9 @@ export const router = createBrowserRouter([
       { index: true, element: <DashboardOverview /> },
       { path: 'projects', element: <ProjectsPage /> },
       { path: 'projects-github', element: <ProjectsGitHubPage /> },
+      { path: 'projects-(github)', element: <Navigate to="/dashboard/projects-github" replace /> },
       { path: 'content', element: <ContentPage /> },
+      { path: 'content-pipeline', element: <ContentPipelinePage /> },
       { path: 'research', element: <ResearchPage /> },
       { path: 'calendar', element: <CalendarPage /> },
       { path: 'finance', element: <FinancePage /> },
@@ -54,6 +57,11 @@ export const router = createBrowserRouter([
     path: '/admin',
     element: <DashboardLayout />,
     children: [{ index: true, element: <AdminPage /> }],
+  },
+  {
+    path: '/content-pipeline',
+    element: <DashboardLayout />,
+    children: [{ index: true, element: <ContentPipelinePage /> }],
   },
   { path: '/404', element: <NotFoundPage /> },
   { path: '*', element: <NotFoundPage /> },

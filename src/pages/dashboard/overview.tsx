@@ -77,7 +77,7 @@ export function DashboardOverview() {
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">Ideas → drafts → schedule</p>
             <Button variant="outline" size="sm" asChild>
-              <Link to="/dashboard/content">Open</Link>
+              <Link to="/content-pipeline">Open</Link>
             </Button>
           </CardContent>
         </Card>

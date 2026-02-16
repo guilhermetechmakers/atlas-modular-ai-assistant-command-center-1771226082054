@@ -19,11 +19,13 @@ export function RepoSelector({ selectedRepoId, onSelectRepo, className }: RepoSe
 
   const selectedRepo = repos.find((r) => r.id === selectedRepoId) ?? null
 
+  const isEmpty = !isLoading && !error && repos.length === 0
+
   return (
-    <Card className={cn('transition-all duration-200 hover:shadow-card-hover', className)}>
+    <Card className={cn('transition-all duration-300 hover:shadow-card-hover border-primary/20', className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20 text-primary">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary/30 to-amber-600/20 text-primary">
             <Github className="h-5 w-5" aria-hidden />
           </span>
           <div>
@@ -35,7 +37,7 @@ export function RepoSelector({ selectedRepoId, onSelectRepo, className }: RepoSe
           variant="outline"
           size="sm"
           onClick={() => refetch()}
-          className="shrink-0"
+          className="shrink-0 hover:scale-[1.02] hover:shadow-md"
         >
           <Link2 className="h-4 w-4 mr-1" aria-hidden />
           Connect GitHub
@@ -44,11 +46,26 @@ export function RepoSelector({ selectedRepoId, onSelectRepo, className }: RepoSe
       <CardContent>
         {isLoading ? (
           <div className="space-y-2">
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-10 w-full animate-shimmer" />
+            <Skeleton className="h-24 w-full animate-shimmer" />
           </div>
         ) : error ? (
-          <p className="text-sm text-destructive">{error}</p>
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3">
+            <p className="text-sm text-destructive">{error}</p>
+            <Button variant="outline" size="sm" className="mt-2" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </div>
+        ) : isEmpty ? (
+          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border bg-panel/50 py-12 text-center">
+            <Github className="h-14 w-14 text-muted-foreground/50 mb-4" aria-hidden />
+            <p className="text-sm font-medium text-foreground">No repositories connected</p>
+            <p className="mt-1 text-sm text-muted-foreground max-w-sm">Connect your GitHub account to select repos and view activity.</p>
+            <Button variant="primary" size="sm" className="mt-4 hover:scale-[1.02] hover:shadow-glow-orange" onClick={() => refetch()}>
+              <Link2 className="h-4 w-4 mr-2" aria-hidden />
+              Connect GitHub
+            </Button>
+          </div>
         ) : (
           <div className="relative">
             <button

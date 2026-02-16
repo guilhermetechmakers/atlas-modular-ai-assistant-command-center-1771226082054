@@ -29,6 +29,8 @@ export function IssueListDetailPanel({ repoId, className }: IssueListDetailPanel
   const [createOpen, setCreateOpen] = useState(false)
   const [createTitle, setCreateTitle] = useState('')
   const [createBody, setCreateBody] = useState('')
+  const [titleError, setTitleError] = useState(false)
+  const BODY_MAX_LENGTH = 5000
 
   const { issues, isLoading, refetch } = useRepoIssues(repoId, stateFilter === 'all' ? undefined : stateFilter)
   const { create, isSubmitting } = useCreateIssue(repoId)
@@ -41,9 +43,11 @@ export function IssueListDetailPanel({ repoId, className }: IssueListDetailPanel
 
   const handleCreate = async () => {
     if (!createTitle.trim()) {
+      setTitleError(true)
       toast.error('Title is required')
       return
     }
+    setTitleError(false)
     try {
       await create({ title: createTitle.trim(), body: createBody.trim() || undefined })
       toast.success('Issue created')
@@ -58,7 +62,7 @@ export function IssueListDetailPanel({ repoId, className }: IssueListDetailPanel
 
   return (
     <>
-      <Card className={cn('transition-all duration-200 hover:shadow-card-hover', className)}>
+      <Card className={cn('transition-all duration-300 hover:shadow-card-hover border-primary/10', className)}>
         <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-2">
           <div>
             <CardTitle className="text-base flex items-center gap-2">
@@ -205,10 +209,14 @@ export function IssueListDetailPanel({ repoId, className }: IssueListDetailPanel
               <Input
                 id="issue-title"
                 value={createTitle}
-                onChange={(e) => setCreateTitle(e.target.value)}
+                onChange={(e) => { setCreateTitle(e.target.value); setTitleError(false) }}
                 placeholder="Issue title"
                 aria-required
+                className={cn(titleError && 'animate-shake border-destructive')}
               />
+              {titleError && (
+                <p className="mt-1 text-xs text-destructive">Title is required</p>
+              )}
             </div>
             <div>
               <label htmlFor="issue-body" className="block text-sm font-medium text-foreground mb-1">
@@ -220,15 +228,19 @@ export function IssueListDetailPanel({ repoId, className }: IssueListDetailPanel
                 onChange={(e) => setCreateBody(e.target.value)}
                 placeholder="Describe the issue..."
                 rows={4}
+                maxLength={BODY_MAX_LENGTH}
                 className="flex w-full rounded-lg border border-input bg-panel px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-y min-h-[80px]"
               />
+              <p className="mt-1 text-xs text-muted-foreground text-right">
+                {createBody.length} / {BODY_MAX_LENGTH}
+              </p>
             </div>
           </div>
           <DialogFooter>
             <Button variant="ghost" onClick={() => setCreateOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleCreate} disabled={isSubmitting || !createTitle.trim()}>
+            <Button onClick={handleCreate} disabled={isSubmitting || !createTitle.trim()} isLoading={isSubmitting}>
               {isSubmitting ? 'Creating…' : 'Create issue'}
             </Button>
           </DialogFooter>

@@ -19,31 +19,45 @@ export function ProjectsGitHubPage() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-2">
-          <FolderGit2 className="h-8 w-8 text-primary" aria-hidden />
-          Projects (GitHub)
+      <header className="animate-fade-in-up">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-amber-600 text-primary-foreground shadow-card">
+            <FolderGit2 className="h-6 w-6" aria-hidden />
+          </span>
+          <span className="bg-gradient-to-r from-white via-primary to-amber-400 bg-clip-text text-transparent">
+            Projects (GitHub)
+          </span>
         </h1>
-        <p className="mt-1 text-muted-foreground">
-          Connect accounts, select repos, view issues and PRs, manage roadmaps and boards
+        <p className="mt-2 text-muted-foreground text-base leading-relaxed max-w-2xl">
+          Connect accounts, select repos, view issues and PRs, manage roadmaps and boards.
         </p>
-      </div>
+      </header>
 
-      <RepoSelector
-        selectedRepoId={repoId}
-        onSelectRepo={setSelectedRepo}
-      />
+      <section className="animate-fade-in-up" style={{ animationDelay: '50ms', animationFillMode: 'backwards' }}>
+        <RepoSelector
+          selectedRepoId={repoId}
+          onSelectRepo={setSelectedRepo}
+        />
+      </section>
 
-      <AIPMActions repoId={repoId} />
+      <section className="animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
+        <AIPMActions repoId={repoId} />
+      </section>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <section className="grid gap-6 lg:grid-cols-2 animate-fade-in-up" style={{ animationDelay: '150ms', animationFillMode: 'backwards' }}>
         <RepoActivityFeed repoId={repoId} />
         <IssueListDetailPanel repoId={repoId} />
-      </div>
+      </section>
 
-      <RoadmapMilestones repoId={repoId} />
+      <section className="animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'backwards' }}>
+        <RoadmapMilestones repoId={repoId} />
+      </section>
 
-      <TaskBoard repoId={repoId} />
+      <section className="animate-fade-in-up" style={{ animationDelay: '250ms', animationFillMode: 'backwards' }}>
+        <TaskBoard repoId={repoId} />
+      </section>
     </div>
   )
 }
+
+export default ProjectsGitHubPage

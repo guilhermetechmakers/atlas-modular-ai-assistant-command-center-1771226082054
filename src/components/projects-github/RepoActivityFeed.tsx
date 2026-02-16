@@ -24,11 +24,16 @@ export function RepoActivityFeed({ repoId, className }: RepoActivityFeedProps) {
   const filteredItems = items
 
   return (
-    <Card className={cn('transition-all duration-200 hover:shadow-card-hover', className)}>
+    <Card className={cn('transition-all duration-300 hover:shadow-card-hover border-primary/10', className)}>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-2">
-        <div>
-          <CardTitle className="text-base">Activity feed</CardTitle>
-          <CardDescription>Commits, PRs, issues with filters</CardDescription>
+        <div className="flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-amber-600/10 text-primary">
+            <GitCommit className="h-5 w-5" aria-hidden />
+          </span>
+          <div>
+            <CardTitle className="text-base">Activity feed</CardTitle>
+            <CardDescription>Commits, PRs, issues with filters</CardDescription>
+          </div>
         </div>
         <div className="flex items-center gap-1 rounded-lg border border-border bg-panel p-1">
           <Filter className="h-4 w-4 text-muted-foreground shrink-0" aria-hidden />
@@ -51,31 +56,33 @@ export function RepoActivityFeed({ repoId, className }: RepoActivityFeedProps) {
       </CardHeader>
       <CardContent>
         {!repoId ? (
-          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border py-12 text-center">
+          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border bg-panel/30 py-12 text-center">
             <GitCommit className="h-12 w-12 text-muted-foreground/50 mb-3" aria-hidden />
-            <p className="text-sm text-muted-foreground">Select a repository to see activity</p>
+            <p className="text-sm font-medium text-muted-foreground">Select a repository</p>
+            <p className="mt-1 text-xs text-muted-foreground">Choose a repo above to see commits, PRs, and issues</p>
           </div>
         ) : isLoading ? (
           <div className="space-y-3">
-            {[1, 2, 3, 4].map((i) => (
-              <Skeleton key={i} className="h-14 w-full" />
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Skeleton key={i} className="h-14 w-full animate-shimmer" />
             ))}
           </div>
         ) : filteredItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border py-12 text-center">
+          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border bg-panel/30 py-12 text-center">
             <GitCommit className="h-12 w-12 text-muted-foreground/50 mb-3" aria-hidden />
-            <p className="text-sm text-muted-foreground">No recent activity</p>
+            <p className="text-sm font-medium text-muted-foreground">No recent activity</p>
+            <p className="mt-1 text-xs text-muted-foreground">Activity will appear here once there are commits, PRs, or issues</p>
           </div>
         ) : (
-          <ul className="space-y-2 max-h-[320px] overflow-y-auto">
+          <ul className="space-y-2 max-h-[320px] overflow-y-auto" role="list">
             {filteredItems.map((item, i) => {
               const config = typeConfig[item.type]
               const Icon = config.icon
               return (
                 <li
                   key={item.id}
-                  className="flex items-start gap-3 rounded-lg border border-border bg-panel/50 px-3 py-2 transition-colors hover:bg-card-surface"
-                  style={{ animationDelay: `${i * 50}ms` }}
+                  className="flex items-start gap-3 rounded-lg border border-border bg-panel/50 px-3 py-2 transition-all duration-200 hover:bg-card-surface hover:shadow-sm animate-fade-in-up"
+                  style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}
                 >
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
                     <Icon className="h-4 w-4" aria-hidden />

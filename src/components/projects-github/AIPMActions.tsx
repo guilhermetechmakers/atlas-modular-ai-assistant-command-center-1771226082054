@@ -56,10 +56,10 @@ export function AIPMActions({
   }
 
   return (
-    <Card className={cn('transition-all duration-200 hover:shadow-card-hover', className)}>
+    <Card className={cn('transition-all duration-300 hover:shadow-card-hover border-primary/20', className)}>
       <CardHeader>
         <CardTitle className="text-base flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-amber-600 text-primary-foreground">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-amber-600 text-primary-foreground shadow-card">
             <Sparkles className="h-5 w-5" aria-hidden />
           </span>
           AI PM actions
@@ -68,19 +68,21 @@ export function AIPMActions({
       </CardHeader>
       <CardContent className="flex flex-col sm:flex-row gap-3">
         <Button
-          variant="outline"
-          className="flex-1 transition-all duration-200 hover:scale-[1.02] hover:shadow-card-hover"
+          variant="primary"
+          className="flex-1 transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-orange bg-gradient-to-r from-primary to-amber-600"
           onClick={handleSummarize}
           disabled={!repoId || summarizing}
+          isLoading={summarizing}
         >
           <FileText className="h-4 w-4 mr-2 shrink-0" aria-hidden />
           {summarizing ? 'Summarizing…' : 'Summarize recent activity'}
         </Button>
         <Button
-          variant="outline"
-          className="flex-1 transition-all duration-200 hover:scale-[1.02] hover:shadow-card-hover"
+          variant="primary"
+          className="flex-1 transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-orange bg-gradient-to-r from-primary to-amber-600"
           onClick={handleCreateFromGoal}
           disabled={!repoId || creating}
+          isLoading={creating}
         >
           <Target className="h-4 w-4 mr-2 shrink-0" aria-hidden />
           {creating ? 'Creating…' : 'Create issues from goal'}
