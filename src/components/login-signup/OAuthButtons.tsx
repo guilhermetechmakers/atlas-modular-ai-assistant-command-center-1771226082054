@@ -1,4 +1,4 @@
-import { Github, Mail, Building2 } from 'lucide-react'
+import { Github, Calendar, Building2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export interface OAuthButtonsProps {
@@ -48,8 +48,8 @@ export function OAuthButtons({
             className="inline-flex items-center justify-center gap-2"
             aria-label="Sign in with Google (Calendar)"
           >
-            <Mail className="h-4 w-4" aria-hidden />
-            Google
+            <Calendar className="h-4 w-4" aria-hidden />
+            Google (Calendar)
           </a>
         </Button>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Search } from 'lucide-react'
 import { toast } from 'sonner'
 import {
@@ -18,14 +18,35 @@ type Step = 'auth' | 'verify_email'
 
 export default function LoginSignupPage() {
   const navigate = useNavigate()
-  const [mode, setMode] = useState<'login' | 'signup'>('signup')
+  const [searchParams] = useSearchParams()
+  const modeParam = searchParams.get('mode')
+  const initialMode = modeParam === 'login' || modeParam === 'signup' ? modeParam : 'signup'
+  const [mode, setMode] = useState<'login' | 'signup'>(initialMode)
   const [step, setStep] = useState<Step>('auth')
+
+  useEffect(() => {
+    const m = searchParams.get('mode')
+    if (m === 'login' || m === 'signup') setMode(m)
+  }, [searchParams])
   const [pendingEmail, setPendingEmail] = useState<string>('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isResending, setIsResending] = useState(false)
 
   useEffect(() => {
-    document.title = mode === 'login' ? 'Sign in | Atlas' : 'Create account | Atlas'
+    const title = mode === 'login' ? 'Sign in | Atlas' : 'Create account | Atlas'
+    document.title = title
+    let metaDesc = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta')
+      metaDesc.setAttribute('name', 'description')
+      document.head.appendChild(metaDesc)
+    }
+    metaDesc?.setAttribute(
+      'content',
+      mode === 'login'
+        ? 'Sign in to Atlas with email or OAuth (GitHub, Google).'
+        : 'Create your Atlas account and workspace. Email verification supported.'
+    )
     return () => {
       document.title = 'Atlas'
     }
@@ -76,8 +97,9 @@ export default function LoginSignupPage() {
   // Email verification pending view
   if (step === 'verify_email' && pendingEmail) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-workspace px-4">
-        <div className="w-full max-w-md animate-fade-in-up">
+      <div className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden bg-workspace px-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-cyan/10 animate-gradient-bg bg-[length:200%_200%] pointer-events-none" aria-hidden />
+        <div className="relative w-full max-w-md animate-fade-in-up">
           <div className="mb-8 flex justify-center">
             <Link
               to="/"
@@ -89,7 +111,7 @@ export default function LoginSignupPage() {
               Atlas
             </Link>
           </div>
-          <Card className="border-border bg-card-surface">
+          <Card className="border border-border bg-card-surface shadow-card transition-all duration-200 hover:shadow-card-hover">
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Check your email</CardTitle>
               <CardDescription>
@@ -134,8 +156,9 @@ export default function LoginSignupPage() {
 
   // Main auth card: login or signup form
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-workspace px-4">
-      <div className="w-full max-w-md animate-fade-in-up">
+    <div className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden bg-workspace px-4">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-cyan/10 animate-gradient-bg bg-[length:200%_200%] pointer-events-none" aria-hidden />
+      <div className="relative w-full max-w-md animate-fade-in-up">
         <div className="mb-8 flex justify-center">
           <Link
             to="/"

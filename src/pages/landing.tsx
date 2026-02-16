@@ -52,10 +52,10 @@ export function LandingPage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <Button asChild size="lg" className="min-h-12 px-8 text-base shadow-glow-orange hover:shadow-glow-orange">
-              <Link to="/signup">Get started</Link>
+              <Link to="/login-/-signup">Get started</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="min-h-12 px-8 text-base">
-              <Link to="/login">Sign in</Link>
+              <Link to="/login-/-signup?mode=login">Sign in</Link>
             </Button>
           </div>
         </div>
@@ -96,7 +96,7 @@ export function LandingPage() {
             Self-hostable. Audit-first. Built for technical power users.
           </p>
           <Button asChild size="lg" className="min-h-12 px-8">
-            <Link to="/signup">Get started</Link>
+            <Link to="/login-/-signup">Get started</Link>
           </Button>
         </div>
       </section>
@@ -105,7 +105,7 @@ export function LandingPage() {
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4">
           <span className="text-sm text-muted-foreground">© Atlas. Self-host & stay in control.</span>
           <div className="flex gap-6">
-            <Link to="/login" className="text-sm text-muted-foreground hover:text-white transition-colors">Sign in</Link>
+            <Link to="/login-/-signup" className="text-sm text-muted-foreground hover:text-white transition-colors">Login / Sign up</Link>
             <Link to="/help" className="text-sm text-muted-foreground hover:text-white transition-colors">Help</Link>
           </div>
         </div>

@@ -56,6 +56,8 @@ export default {
         'fade-in': 'fadeIn 0.3s ease-out',
         'fade-in-up': 'fadeInUp 0.4s ease-out',
         'shimmer': 'shimmer 1.5s ease-in-out infinite',
+        'shake': 'shake 0.4s ease-in-out',
+        'gradient-bg': 'gradient-x 8s ease infinite',
       },
       keyframes: {
         fadeIn: {
@@ -69,6 +71,11 @@ export default {
         shimmer: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.6' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-4px)' },
+          '20%, 40%, 60%, 80%': { transform: 'translateX(4px)' },
         },
         'gradient-x': {
           '0%, 100%': { backgroundPosition: '0% 50%' },

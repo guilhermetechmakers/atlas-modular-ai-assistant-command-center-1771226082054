@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,6 +33,7 @@ export function AuthForm({
   forgotPasswordHref = '/forgot-password',
 }: AuthFormProps) {
   const schema = mode === 'signup' ? signupPasswordSchema : emailPasswordSchema
+  const [showShake, setShowShake] = useState(false)
   const {
     register,
     handleSubmit,
@@ -44,8 +46,21 @@ export function AuthForm({
         : { email: '', password: '' },
   })
 
+  const hasErrors = Object.keys(errors).length > 0
+  useEffect(() => {
+    if (hasErrors) {
+      setShowShake(true)
+      const t = setTimeout(() => setShowShake(false), 400)
+      return () => clearTimeout(t)
+    }
+  }, [hasErrors])
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={`space-y-4 ${showShake ? 'animate-shake' : ''}`}
+      aria-invalid={hasErrors}
+    >
       <div>
         <label htmlFor="auth-email" className="mb-1.5 block text-sm font-medium text-foreground">
           Email
