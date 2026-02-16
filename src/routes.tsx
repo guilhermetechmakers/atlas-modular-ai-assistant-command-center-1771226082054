@@ -5,6 +5,7 @@ import { LoginPage } from '@/pages/login'
 import { SignupPage } from '@/pages/signup'
 import { DashboardOverview } from '@/pages/dashboard/overview'
 import { ProjectsPage } from '@/pages/dashboard/projects'
+import { ProjectsGitHubPage } from '@/pages/dashboard/projects-github'
 import { ContentPage } from '@/pages/dashboard/content'
 import { ResearchPage } from '@/pages/dashboard/research'
 import { CalendarPage } from '@/pages/dashboard/calendar'
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardOverview /> },
       { path: 'projects', element: <ProjectsPage /> },
+      { path: 'projects-github', element: <ProjectsGitHubPage /> },
       { path: 'content', element: <ContentPage /> },
       { path: 'research', element: <ResearchPage /> },
       { path: 'calendar', element: <CalendarPage /> },
