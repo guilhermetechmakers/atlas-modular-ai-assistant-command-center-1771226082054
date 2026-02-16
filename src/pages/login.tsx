@@ -72,6 +72,14 @@ export function LoginPage() {
                   <p className="mt-1 text-sm text-destructive" role="alert">{errors.password.message}</p>
                 )}
               </div>
+              <p className="text-right">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm font-medium text-primary hover:underline focus-ring rounded"
+                >
+                  Forgot password?
+                </Link>
+              </p>
               <Button type="submit" className="w-full" isLoading={isSubmitting}>
                 Sign in
               </Button>

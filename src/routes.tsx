@@ -3,6 +3,8 @@ import { DashboardLayout } from '@/components/layout/dashboard-layout'
 import { LandingPage } from '@/pages/landing'
 import { LoginPage } from '@/pages/login'
 import { SignupPage } from '@/pages/signup'
+import { ForgotPasswordPage } from '@/pages/forgot-password'
+import { ResetPasswordPage } from '@/pages/reset-password'
 import { DashboardOverview } from '@/pages/dashboard/overview'
 import { ProjectsPage } from '@/pages/dashboard/projects'
 import { ProjectsGitHubPage } from '@/pages/dashboard/projects-github'
@@ -20,6 +22,8 @@ export const router = createBrowserRouter([
   { path: '/', element: <LandingPage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '/signup', element: <SignupPage /> },
+  { path: '/forgot-password', element: <ForgotPasswordPage /> },
+  { path: '/reset-password', element: <ResetPasswordPage /> },
   {
     path: '/dashboard',
     element: <DashboardLayout />,
