@@ -12,6 +12,7 @@ import { ProjectsGitHubPage } from '@/pages/dashboard/projects-github'
 import { ContentPage } from '@/pages/dashboard/content'
 import { ContentPipelinePage } from '@/pages/ContentPipeline'
 import { ResearchPage } from '@/pages/dashboard/research'
+import { ResearchKnowledgeBasePage } from '@/pages/ResearchKnowledgeBase'
 import { CalendarPage } from '@/pages/dashboard/calendar'
 import { FinancePage } from '@/pages/dashboard/finance'
 import { AgentsPage } from '@/pages/dashboard/agents'
@@ -38,6 +39,7 @@ export const router = createBrowserRouter([
       { path: 'content', element: <ContentPage /> },
       { path: 'content-pipeline', element: <ContentPipelinePage /> },
       { path: 'research', element: <ResearchPage /> },
+      { path: 'research-knowledge-base', element: <ResearchKnowledgeBasePage /> },
       { path: 'calendar', element: <CalendarPage /> },
       { path: 'finance', element: <FinancePage /> },
       { path: 'agents', element: <AgentsPage /> },
@@ -62,6 +64,11 @@ export const router = createBrowserRouter([
     path: '/content-pipeline',
     element: <DashboardLayout />,
     children: [{ index: true, element: <ContentPipelinePage /> }],
+  },
+  {
+    path: '/research-knowledge-base',
+    element: <DashboardLayout />,
+    children: [{ index: true, element: <ResearchKnowledgeBasePage /> }],
   },
   { path: '/404', element: <NotFoundPage /> },
   { path: '*', element: <NotFoundPage /> },
