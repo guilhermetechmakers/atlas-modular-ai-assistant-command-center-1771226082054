@@ -25,7 +25,7 @@ export function OAuthButtons({
         <Button
           type="button"
           variant="outline"
-          className="w-full transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full transition-all duration-200 hover:scale-[1.02] hover:shadow-card active:scale-[0.98] hover:border-primary/40"
           asChild
         >
           <a
@@ -40,7 +40,7 @@ export function OAuthButtons({
         <Button
           type="button"
           variant="outline"
-          className="w-full transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full transition-all duration-200 hover:scale-[1.02] hover:shadow-card active:scale-[0.98] hover:border-primary/40"
           asChild
         >
           <a

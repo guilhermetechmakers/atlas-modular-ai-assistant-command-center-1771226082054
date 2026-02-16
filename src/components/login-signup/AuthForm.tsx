@@ -130,7 +130,7 @@ export function AuthForm({
       )}
       <Button
         type="submit"
-        className="w-full transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        className="w-full transition-all duration-200 hover:scale-[1.02] hover:shadow-glow-orange active:scale-[0.98]"
         isLoading={isLoading}
       >
         {mode === 'login' ? 'Sign in' : 'Get started'}

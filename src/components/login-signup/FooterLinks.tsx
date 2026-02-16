@@ -20,7 +20,7 @@ export function FooterLinks({
   helpHref = defaultHelp,
 }: FooterLinksProps) {
   const linkClass =
-    'text-sm text-muted-foreground hover:text-foreground transition-colors focus-ring rounded'
+    'text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 focus-ring rounded py-3 px-2 inline-flex items-center justify-center min-h-[44px]'
 
   return (
     <footer

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Search } from 'lucide-react'
 import { toast } from 'sonner'
@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { signUp, signIn, resendVerificationEmail } from '@/api/auth'
 import type { ApiError } from '@/lib/api'
 import type { AuthFormValues, SignupFormValues } from '@/components/login-signup'
+import { cn } from '@/lib/utils'
 
 type Step = 'auth' | 'verify_email'
 
@@ -44,8 +45,8 @@ export default function LoginSignupPage() {
     metaDesc?.setAttribute(
       'content',
       mode === 'login'
-        ? 'Sign in to Atlas with email or OAuth (GitHub, Google).'
-        : 'Create your Atlas account and workspace. Email verification supported.'
+        ? 'Sign in to Atlas with email or OAuth (GitHub, Google). Workspace selection for teams.'
+        : 'Create your Atlas account and workspace. Email verification supported. GitHub and Google sign-in.'
     )
     return () => {
       document.title = 'Atlas'
@@ -94,24 +95,39 @@ export default function LoginSignupPage() {
     }
   }
 
+  const layoutWrapper = (content: ReactNode) => (
+    <div className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden bg-workspace px-4 py-12">
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-cyan/15 animate-gradient-bg bg-[length:200%_200%] pointer-events-none"
+        aria-hidden
+      />
+      {/* Subtle mesh / depth */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(255,153,0,0.12),transparent)] pointer-events-none"
+        aria-hidden
+      />
+      {content}
+    </div>
+  )
+
   // Email verification pending view
   if (step === 'verify_email' && pendingEmail) {
-    return (
-      <div className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden bg-workspace px-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-cyan/10 animate-gradient-bg bg-[length:200%_200%] pointer-events-none" aria-hidden />
-        <div className="relative w-full max-w-md animate-fade-in-up">
-          <div className="mb-8 flex justify-center">
+    return layoutWrapper(
+      <div className="relative w-full max-w-md animate-fade-in-up px-4">
+          <header className="mb-8 flex justify-center">
             <Link
               to="/"
-              className="flex items-center gap-2 font-semibold text-white transition-opacity hover:opacity-90"
+              className="flex items-center gap-2 font-semibold text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.02] focus-ring rounded-lg"
+              aria-label="Atlas home"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md">
                 <Search className="h-5 w-5" aria-hidden />
               </span>
               Atlas
             </Link>
-          </div>
-          <Card className="border border-border bg-card-surface shadow-card transition-all duration-200 hover:shadow-card-hover">
+          </header>
+          <Card className="border border-border bg-card-surface shadow-card transition-all duration-300 hover:shadow-card-hover hover:border-primary/20">
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Check your email</CardTitle>
               <CardDescription>
@@ -144,33 +160,39 @@ export default function LoginSignupPage() {
           <p className="mt-6 text-center">
             <Link
               to="/"
-              className="text-sm text-muted-foreground transition-colors hover:text-white"
+              className="text-sm text-muted-foreground transition-colors hover:text-white focus-ring rounded"
             >
               Back to home
             </Link>
           </p>
         </div>
-      </div>
     )
   }
 
   // Main auth card: login or signup form
-  return (
-    <div className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden bg-workspace px-4">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-cyan/10 animate-gradient-bg bg-[length:200%_200%] pointer-events-none" aria-hidden />
-      <div className="relative w-full max-w-md animate-fade-in-up">
-        <div className="mb-8 flex justify-center">
+  return layoutWrapper(
+    <div className="relative w-full max-w-md animate-fade-in-up px-4">
+        <header className="mb-8 flex justify-center">
           <Link
             to="/"
-            className="flex items-center gap-2 font-semibold text-white transition-opacity hover:opacity-90"
+            className="flex items-center gap-2 font-semibold text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.02] focus-ring rounded-lg"
+            aria-label="Atlas home"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md">
               <Search className="h-5 w-5" aria-hidden />
             </span>
             Atlas
           </Link>
-        </div>
-        <Card className="border-border bg-card-surface transition-all duration-200 hover:shadow-card-hover">
+        </header>
+        <h1 className="sr-only">
+          {mode === 'login' ? 'Sign in to Atlas' : 'Create your Atlas account'}
+        </h1>
+        <Card
+          className={cn(
+            'border border-border bg-card-surface shadow-card',
+            'transition-all duration-300 hover:shadow-card-hover hover:border-primary/20'
+          )}
+        >
           <CardHeader className="text-center">
             <CardTitle className="text-xl">
               {mode === 'login' ? 'Sign in' : 'Create account'}
@@ -221,12 +243,11 @@ export default function LoginSignupPage() {
         <p className="mt-6 text-center">
           <Link
             to="/"
-            className="text-sm text-muted-foreground transition-colors hover:text-white"
+            className="text-sm text-muted-foreground transition-colors hover:text-white focus-ring rounded"
           >
             Back to home
           </Link>
         </p>
       </div>
-    </div>
   )
 }

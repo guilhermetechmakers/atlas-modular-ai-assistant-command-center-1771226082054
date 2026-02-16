@@ -38,7 +38,7 @@ export function SSOMFACTA({ className }: SSOMFACTAProps) {
         type="button"
         disabled
         aria-label="Enable two-factor authentication (disabled)"
-        className="relative h-6 w-11 shrink-0 rounded-full border border-border bg-muted transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-60"
+        className="relative h-6 w-11 shrink-0 rounded-full border border-border bg-muted transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
       >
         <span
           className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-muted-foreground/40 transition-transform duration-300"
